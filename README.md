@@ -1,18 +1,18 @@
-# java.util.Optional
+# A Brief Tour of Kotlin
 
-This is lightning talk I gave at a Chicago Java Users Group meeting on June 2, 2016. This was my second time speaking in public, and I feel like I learned a lot since [my talk on Akka](https://github.com/tginsberg/what-is-akka).
+This is lightning talk I gave at a Chicago Java Users Group meeting on December 13, 2016. This was my third time speaking in public, and while I was still nervous I felt better about this one than others. 
 
 ### Slide Show
 
-This slides for this presentation can be [viewed here](https://tginsberg.github.io/java-optional).
+This slides for this presentation can be [viewed here](https://tginsberg.github.io/brief-tour-of-kotlin).
 
 ### Video
 
-The folks at [Spantree](http://www.spantree.net/) were nice enough to record and host a video of the presentation. Check it out below!
+The folks at [Spantree](http://www.spantree.net/) were nice enough to record and post a video of the presentation. Check it out below!
 
-[![Video of Presentation](images/video.png)](https://vimeo.com/169545117)
+[![Video of Presentation](images/video.png)](https://vimeo.com/196243716)
 
 
 ### Feedback
 
-This time, I included a link to a quick anonymous survey in order to collect feedback. Two people in the audience were kind enough to spend time filling it out and I got some great feedback. Things I have to work on: don't use the podium as a shield, and don't look down so much. Things to work on for next time, for sure.
+I included a link to a quick anonymous survey in order to collect feedback. Two people were kind enough to spend time filling it out and I got some great feedback. Things I have to work on: Pause more instead of "um" and "ah" (this is super hard), give an overview of WHY to use Kotlin not just assume it's self evident or that my audience has heard of it, and perhaps provide an agenda, kill the "Kotlin Island" joke (which did seem funnier at home).
