@@ -1,0 +1,485 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>A Brief Tour of Kotlin</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/solarized.css" id="theme">
+		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/overrides.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<!-- Introduction -->
+				<section>
+					<h1>A Brief Tour of Kotlin</h1>
+					<p>
+						<small>
+						Created by <a href="http://ginsberg.com" target="_blank">Todd Ginsberg</a> 
+						for <a href="https://www.meetup.com/ChicagoJUG/events/235596455/" target="_blank">CJUG</a>
+						</small>
+						<br/>
+					    <small>2016-12-13</small>
+					</p>
+				</section>
+
+				<section>
+					<p>The Gateway to St. Petersburg!</p>
+					<img src="images/kotlin_island.jpg"/>
+					<p><small><i>Photo courtesy of <a href="http://wikimapia.org/597467/Kotlin-Island">Wikimapia</a></i></small></p>
+				</section>
+
+				<!-- What is Kotlin? -->
+				<section>
+					<h2>So, uh, Kotlin?</h2>
+					<ul>
+						<li class="fragment">Staticly typed JVM language</li>
+						<li class="fragment">Targets Java 6 bytecode</li>
+						<li class="fragment">Deploy to Android</li>
+						<li class="fragment">Compile to JavaScript (ECMAScript 5.1)</li>
+						<li class="fragment">Interoperates with Java</li>
+						<li class="fragment">By JetBrains, under Apache 2 license</li>
+						<li class="fragment">IDE plugins available for IntelliJ and Eclipse</li>
+						<li class="fragment">1.0 Release: February, 2016</li>
+					</ul>
+				</section>
+
+				<!-- Var/Val-->
+				<section>
+
+					<section>
+						<h2>Basics - Classes</h2>
+						<pre><code data-trim>
+class Customer(name: String) {
+    init {
+        println("Customer initialized with value ${name}")
+    }
+    ...
+}
+						</code></pre>
+						<ul>
+							<li>Classes define their constructor in the class header</li>
+							<li>Init blocks are executed in order and act as constructor body</li>
+							<li>Classes are final by default</li>
+							<li class="fragment">Look! No semicolons!</li>
+							<li class="fragment">Look! String interpolation!</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Basics - Inheritance</h2>
+						<pre><code data-trim>
+open class Entity(name: String) { 
+	...
+}
+class Customer(name: String) : Entity(name) {
+    init {
+        println("Customer initialized with value ${name}")
+    }
+    ...
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2>Basics - var/val</h2>
+
+						<pre><code data-trim>
+var name: String = "Todd" // Initial
+name = "Emma"             // OK
+						</code></pre>
+						<pre><code data-trim>
+val name: String = "Todd" // Initial
+name = "Emma"             // Compiler Error
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Basics - Equality</h2>
+
+						<pre><code data-trim>
+val s1 = "CJUG"
+val s2 = "cjug"
+s1 == s2.toUpperCase()  // (Structural) True!
+s1 === s2               // (Referential) False
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Basics - No New Keyword</h2>
+
+						<pre><code data-trim>
+val me: Person = Person("Todd")
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Basics - No Ternary</h2>
+
+						<pre><code data-trim>
+val status: String = if(x == 42) "Success" else "Fail"
+						</code></pre>
+						<p>Use <i>if</i> expression instead!</p>
+					</section>
+					<section>
+						<h2>Basics - FUNctions!</h2>
+
+						<pre><code data-trim>
+fun generateRandomNumber(): Int {
+    return 4
+}
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+fun generateRandomNumber(): Int = 4
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Basics - Named and Optional Parameters</h2>
+
+						<pre><code data-trim>
+fun generateRandomNumber(start: Int = 0): Int = start + 4
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+generateRandomNumber()    // 4
+generateRandomNumber(1)   // 5
+generateRandomNumber(start = 1)   // 5
+						</code></pre>
+					</section>
+
+
+				</section>
+
+				<!-- Type Inference -->
+				<section>
+					<section>
+					<h2>Type Inference</h2>
+					<p>Can't Someone Else Do It?<p>
+						<pre><code data-trim>
+var result : Int = add(1, 1)
+fun negate(number: Int): Int = 0-number
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+var result = add(1, 1) 
+fun negate(number: Int) = 0-number 
+						</code></pre>						
+					</section>
+					<section>
+					<h2>Smart Casting</h2>
+					<p>No need to cast<p>
+						<pre><code data-trim>
+when (x) {
+    is Int -> print(x % 2 == 0)
+    is String -> print(x.length + 1)
+    is IntArray -> print(x.sum())
+}
+						</code></pre>						
+					</section>
+
+				</section>
+
+				<!-- Null Safety -->
+				<section>
+					<section>
+						<h2>Null Safety</h2>
+						<ul>
+							<li>Null checking is built in</li>
+							<li>Must declare when you want to allow nulls</li>
+						</ul>
+						<pre><code data-trim>
+var name : String = "Todd" // Guaranteed to never be null
+var salary : Int? = null   // May be null
+						</code></pre>
+
+					</section>
+
+					<section>
+						<h2>Traverse safely</h2>
+						<pre><code data-trim>
+var homeTown : String? = null
+println(homeTown.toUpperCase())  // Not allowed
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+val homeTown : String? = ...
+println(homeTown?.toUpperCase()) // OK!
+                ^^
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Elvis</h2>
+						<pre><code data-trim>
+val lowest : Int? = listOf(1, 2, 3).min()
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+val lowest : Int = listOf(1, 2, 3).min() ?: 0
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Combine Them!</h2>
+						<pre><code data-trim>
+val homeTown : String? = ...
+println(homeTown?.toUpperCase() ?: "Unknown")
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Manual Override</h2>
+						<pre><code data-trim>
+val lowest : Int? = listOf(1, 2, 3).min()
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+val lowest : Int = listOf(1, 2, 3).min()!!
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+val lowest : Int = listOf&lt;Int&gt;().min()!!
+// KotlinNullPointerException!
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Remember The Names!</h2>
+						<h3 class="fragment">?. - <i>Safe traversal</i></h3>
+						<h3 class="fragment">?: - <i>Elvis</i></h3>
+						<h3 class="fragment">!! - <i>Hold my beer<span class="fragment">!!</span></i></h3>
+					</section>
+				</section>
+
+				<!-- Extension Methods -->
+				<section>
+					<section>
+						<h2>Extension Methods</h2>
+						<p>Extend existing types with your own functions!</p>
+						<pre><code data-trim>
+fun String.initialCaps(): String =
+    when(this.length) {
+        0 ->    this
+        1 ->    this.toUpperCase()
+        else -> this[0].toUpperCase() + this.substring(1).toLowerCase()
+    }
+						</code></pre>
+						<p><small>Pssst! Hey, <i>'when'</i> is an expression returning a value!</small></p>
+					</section>
+				</section>
+
+				<!-- Lambdas/Functions -->
+				<section>
+					<section>
+						<h2>Lambdas</h2>
+						<pre><code data-trim>
+listOf(2,3,4).map { a -> a * 2 } // [4,6,8]
+						</code></pre>							
+						<pre class="fragment"><code data-trim>
+listOf(2,3,4).map { it * 2 } // [4,6,8]
+						</code></pre>			
+					</section>	
+
+					<section>
+						<h2>Lambdas are Closures</h2>
+						<pre><code data-trim>
+var sum = 0
+ints.filter { it > 0 }.forEach {
+    sum += it
+}
+print(sum)
+						</code></pre>			
+						<p>Can access variables in their outer scope</p>
+					</section>	
+				</section>
+
+				<!-- Properties -->
+				<section>
+					<section>
+						<h2>Properties</h2>
+						<pre ><code data-trim>
+class Person() {
+    var name: String? = null
+}
+						</code></pre>
+						<pre class="fragment"><code data-trim>
+val e = Person()
+e.name = "emma"
+println("Person's name is ${e.name}")
+// -> "Person's name is emma"
+						</code></pre>
+					</section>
+					<section>
+						<h2>Properties (continued)</h2>
+						<pre><code data-trim>
+class Person() {
+    var name: String? = null
+        set(value) {
+            field = value?.initialCaps() ?: value
+        }
+}
+
+val e = Person()
+e.name = "emma"
+println("Person's name is ${e.name}")
+// -> "Person's name is Emma"
+						</code></pre>
+					</section>
+					<section>
+						<h2>Propeties - Constructor</h2>
+						<pre><code data-trim>
+class Customer(val name: String) {
+    ...
+}
+						</code></pre>
+					</section>
+				</section>
+
+				<!-- Data Classes -->
+				<section>
+					<section>
+						<h2>Data Classes</h2>
+						<p>Java version...</p>
+						<pre><code data-trim>
+public class PersonDto {
+    public String firstName;
+    public String lastName;
+}
+						</code></pre>
+						<small><i>Only 4 lines</i></small>
+					</section>
+
+					<section>
+						<p>Still Java Version</p>
+						<pre><code data-trim>
+public String getFirstName() {
+    return firstName;
+}
+
+public void setFirstName(final String firstName) {
+    this.firstName = firstName;
+}
+
+public String getLastName() {
+    return lastName;
+}
+
+public void setLastName(final String lastName) {
+    this.lastName = lastName;
+}
+						</code></pre>
+						<small><i>Up to 20 lines</i></small>
+					</section>
+					<section>
+						<p>Even More Java Version</p>
+						<pre><code data-trim>
+@Override
+public String toString() {
+    return "PersonDto{" +
+            "firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            '}';
+}
+						</code></pre>
+						<small><i>OK, 29 lines</i></small>
+					</section>
+					<section>
+						<p>Even Yet Still More Java Version</p>
+						<pre><code data-trim>
+@Override
+public boolean equals(Object o) {
+    if (this == o) {
+        return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+        return false;
+    }
+
+    PersonDto personDto = (PersonDto) o;
+
+    if (!firstName.equals(personDto.firstName)) {
+        return false;
+    }
+    return lastName.equals(personDto.lastName);
+}
+						</code></pre>
+						<small><i>46 lines already?</i></small>
+					</section>
+					<section>
+						<p>Oh come on...</p>
+						<pre><code data-trim>
+@Override
+public int hashCode() {
+    int result = firstName.hashCode();
+    result = 31 * result + lastName.hashCode();
+    return result;
+}
+						</code></pre>
+						<small><i>A lean mean 51 lines</i></small>
+					</section>
+
+					<section>
+						<h2>Kotlin Version</h2>
+						<pre><code data-trim>
+data class PersonDto(var firstName: String, var lastName: String)						
+						</code></pre>
+						<small><i>Only 1 line!</i></small>
+				</section>
+
+				<!-- Resources -->
+				<section>
+					<h2>Now What?</h2>
+					<ul>
+						<li>Learn - <a href="http://kotlinlang.org/">kotlinlang.org</a>
+						<li>Play - <a href="http://try.kotlinlang.org/">try.kotlinlang.org</a>
+						<li>Discuss - <a href="https://discuss.kotlinlang.org/">discuss.kotlinlang.org</a></li>
+					</ul>
+					
+				</section>
+
+				<!-- Well I'm glad that's over -->
+				<section data-transition="none">
+					<h1>Thanks!</h1>
+					<p>
+						<i class="fa fa-twitter"></i>&nbsp;<a href="https://twitter.com/ToddGinsberg" target="_blank">@ToddGinsberg</a>
+					</p>					
+					<p>
+						<i class="fa fa-slack"></i>&nbsp;<a href="http://www.chicagotechslack.com/" target="_blank">#todd.ginsberg</a>
+					</p>
+					<p>
+						<i class="fa fa-commenting"></i> <a href="http://bit.ly/KotlinTourFeedback" target="_blank">bit.ly/KotlinTourFeedback</a>
+					</p>
+				</section>		
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				transition: 'none',
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
